@@ -3,7 +3,7 @@ from PIL import Image, ImageDraw
 
 import classify
 
-IMAGE_SCALE_SIZE = (500, 500)
+IMAGE_SCALE_SIZE = (600, 600)
 
 def image_colors(filename, k=3):
     fp = open(filename, "r")
