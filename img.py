@@ -6,6 +6,7 @@ import classify
 IMAGE_SCALE_SIZE = (600, 600)
 
 def image_colors(filename, k=3):
+    "Extract the first k dominant colors from an image"
     fp = open(filename, "r")
     im = Image.open(fp)
     im.thumbnail(IMAGE_SCALE_SIZE, Image.NEAREST)
@@ -20,22 +21,25 @@ def image_colors(filename, k=3):
     return prediction
 
 def draw_sample(filename, predictions):
+    "Draw the original image with a box of the predicted dominant colors"
     k = len(predictions)
-    im = Image.new("RGB", (100, k * 50))
+
+    fp = open(filename, "r")
+    im = Image.open(fp)
+    im.thumbnail(IMAGE_SCALE_SIZE, Image.ANTIALIAS)
     draw = ImageDraw.Draw(im)
 
     top, bottom = 0, 50
     for color in predictions:
-        print color
-        draw.rectangle(((0, top), (100, bottom)), fill=tuple(color))
-        draw.line(((0,bottom), (100, bottom)), fill="white", width=2)
-        top, bottom = top + 100, bottom + 50
+        draw.rectangle(((0, top), (150, bottom)), fill=tuple(color))
+        draw.line(((0, bottom), (150, bottom)), fill="white", width=2)
+        text_x = 10
+        text_y = (top + bottom) / 2
+        draw.text((text_x, text_y), str(color), fill="red")
+        top, bottom = top + 50, bottom + 50
 
+    fp.close()
     im.show()
-
-    img_orig = Image.open(filename)
-    img_orig.thumbnail((500, 500), Image.NEAREST)
-    img_orig.show()
 
 def main(args):
     try:
