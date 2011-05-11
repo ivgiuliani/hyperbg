@@ -61,9 +61,9 @@ class KColorMeans(object):
                     instance[RGB_GREEN] / 255.0,
                     instance[RGB_BLUE] / 255.0)
 
-        # do not add every instance to the dataset as images have
-        # (usually) many pixels. Add a random uniformly distributed
-        # subset that covers 60% of the original image
+        # Rather than having each pixel contribute to the classification
+        # we can use a smaller subset that covers 60% of the original image
+        # without losing any precision
         # TODO: maybe 60% is a too low threshold
         if random.random() > 0.6:
             return
