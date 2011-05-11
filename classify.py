@@ -6,9 +6,9 @@ RGB_RED, RGB_GREEN, RGB_BLUE = 0, 1, 2
 
 def euclidean_color_distance(obj1, obj2):
     "Returns the euclidean distance between two colors"
-    return 30 * (obj1[RGB_RED] - obj2[RGB_RED]) ** 2     + \
-           59 * (obj1[RGB_GREEN] - obj2[RGB_GREEN]) ** 2 + \
-           11 * (obj1[RGB_BLUE] - obj2[RGB_BLUE]) ** 2
+    return (obj1[RGB_RED] - obj2[RGB_RED]) ** 2     + \
+           (obj1[RGB_GREEN] - obj2[RGB_GREEN]) ** 2 + \
+           (obj1[RGB_BLUE] - obj2[RGB_BLUE]) ** 2
 
 def color_distance(obj1, obj2):
     """Returns the distance between two colors
