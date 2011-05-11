@@ -43,7 +43,7 @@ class KColorMeans(object):
     ALPHA_RATE = 0.9
 
     def __init__(self, k=3, distance=euclidean_color_distance):
-        self.k = 3
+        self.k = k
         self.distance = distance
         random.seed()
         self.means = []
