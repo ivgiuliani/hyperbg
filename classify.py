@@ -68,7 +68,14 @@ class KColorMeans(object):
         # find the argmin
         min_idx = distances.index(min(distances))
 
-        # update the mean for faster convergence (see Bishop)
+        # update the mean online for faster convergence, see
+        # @book{bishop2007,
+        #   author = {Christopher M. Bishop},
+        #   publisher = {Springer},
+        #   title = {Pattern Recognition and Machine Learning},
+        #   year = 2007,
+        #   isbn = {0387310738},
+        # }
         color_diff = map(operator.sub, instance, self.means[min_idx])
         alpha_vector = [self.ALPHA_RATE * x for x in color_diff]
         self.means[min_idx] = map(operator.add, self.means[min_idx], alpha_vector)
