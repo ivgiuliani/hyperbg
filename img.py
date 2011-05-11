@@ -1,3 +1,4 @@
+import sys
 from PIL import Image, ImageDraw
 
 import classify
@@ -15,15 +16,8 @@ def image_colors(filename, k=3):
     fp.close()
     return prediction
 
-if __name__ == "__main__":
-    import sys
-    k = int(sys.argv[1])
-    filename = sys.argv[2]
-
-    print "Using k: %d" % k
-
-    predictions = image_colors(filename, k)
-
+def draw_sample(filename, predictions):
+    k = len(predictions)
     im = Image.new("RGB", (100, k * 50))
     draw = ImageDraw.Draw(im)
 
@@ -39,4 +33,20 @@ if __name__ == "__main__":
     img_orig = Image.open(filename)
     img_orig.thumbnail((500, 500), Image.NEAREST)
     img_orig.show()
+
+def main(args):
+    try:
+        k = int(args[1])
+        filename = args[2]
+    except (ValueError, IndexError):
+        print("Usage: %s <classes> <filename>" % (args[0], ))
+        return False
+
+    predictions = image_colors(filename, k)
+    draw_sample(filename, predictions)
+
+    return True
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))
     
