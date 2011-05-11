@@ -3,10 +3,12 @@ from PIL import Image, ImageDraw
 
 import classify
 
+IMAGE_SCALE_SIZE = (500, 500)
+
 def image_colors(filename, k=3):
     fp = open(filename, "r")
     im = Image.open(fp)
-    im.thumbnail((500, 500), Image.NEAREST)
+    im.thumbnail(IMAGE_SCALE_SIZE, Image.NEAREST)
     im.load()
     classifier = classify.KColorMeans(k=k)
 
