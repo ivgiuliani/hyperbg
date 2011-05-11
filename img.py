@@ -37,18 +37,16 @@ def draw_sample(filename, predictions):
 def main(args):
     try:
         filename = args[1]
-    except (ValueError, IndexError):
+    except IndexError:
         print("Usage: %s <classes> <filename>" % (args[0], ))
         return False
-    
-    k = None
+ 
     try:
-        if (len(args) > 2):
-            k = args[2]
-    except ValueError:
-        pass
+        k = int(args[2])
+    except (IndexError, ValueError):
+        k = None
 
-    predictions = image_colors(filename, k)
+    predictions = image_colors(filename, k or 3)
     draw_sample(filename, predictions)
 
     return True
