@@ -53,6 +53,7 @@ class KColorMeans(object):
         random.seed()
         self.means = []
 
+        # initialize the means to random values
         for i in range(self.k):
             self.means.append([
                 random.randint(0, 255) / 255.0,
