@@ -6,6 +6,7 @@ import classify
 def image_colors(filename, k=3):
     fp = open(filename, "r")
     im = Image.open(fp)
+    im.thumbnail((500, 500), Image.NEAREST)
     im.load()
     classifier = classify.KColorMeans(k=k)
 
@@ -21,7 +22,7 @@ def draw_sample(filename, predictions):
     im = Image.new("RGB", (100, k * 50))
     draw = ImageDraw.Draw(im)
 
-    top, bottom = 0, 100
+    top, bottom = 0, 50
     for color in predictions:
         print color
         draw.rectangle(((0, top), (100, bottom)), fill=tuple(color))

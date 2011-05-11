@@ -61,13 +61,6 @@ class KColorMeans(object):
                     instance[RGB_GREEN] / 255.0,
                     instance[RGB_BLUE] / 255.0)
 
-        # Rather than having each pixel contribute to the classification
-        # we can use a smaller subset that covers 60% of the original image
-        # without losing any precision
-        # TODO: maybe 60% is a too low threshold
-        if random.random() > 0.6:
-            return
-
         distances = [
             self.distance(self.means[i], instance)
             for i in range(self.k)
