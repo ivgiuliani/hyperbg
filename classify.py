@@ -1,3 +1,7 @@
+"""
+An implementation of the k-means algorithm for predominant color extraction
+"""
+
 import random
 import math
 import operator
@@ -12,8 +16,10 @@ def euclidean_color_distance(obj1, obj2):
 
 def color_distance(obj1, obj2):
     """Returns the distance between two colors
-    
-    see http://www.compuphase.com/cmetric.htm
+
+    This is more accurate than the euclidean distance but it also
+    considerably slower, even though gives a faster convergence.
+    See http://www.compuphase.com/cmetric.htm
     """
 
     # convert the values in the 0-255 range
@@ -37,9 +43,8 @@ def color_distance(obj1, obj2):
 
 
 class KColorMeans(object):
-    """
-    Returns k clusters for the given color dataset
-    """
+    "Returns k clusters for the given color dataset"
+
     ALPHA_RATE = 0.9
 
     def __init__(self, k=3, distance=euclidean_color_distance):
@@ -65,6 +70,7 @@ class KColorMeans(object):
             self.distance(self.means[i], instance)
             for i in range(self.k)
         ]
+
         # find the argmin
         min_idx = distances.index(min(distances))
 
@@ -81,7 +87,7 @@ class KColorMeans(object):
         self.means[min_idx] = map(operator.add, self.means[min_idx], alpha_vector)
 
     def predict(self):
-        "Returns k tuples, each corrisponding to a cluster"
+        "Returns k color tuples, each corrisponding to a cluster"
         predictions = []
         for mean in self.means:
             predictions.append([
