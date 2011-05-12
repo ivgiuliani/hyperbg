@@ -3,21 +3,21 @@ from PIL import Image, ImageDraw
 
 from hyperbg import classify
 
-IMAGE_SCALE_SIZE = (600, 600)
-
 def image_colors(filename, k=3):
     "Extract the first k dominant colors from an image"
     fp = open(filename, "r")
+    classifier = classify.Classifier(k=k)
+
     im = Image.open(fp)
-    im.thumbnail(IMAGE_SCALE_SIZE, Image.NEAREST)
     im.load()
-    classifier = classify.KColorMeans(k=k)
+    im = classifier.prepare_image(im)
 
     for pixel in im.getdata():
         classifier.fit(pixel)
 
     prediction = classifier.predict()
     fp.close()
+
     return prediction
 
 def draw_sample(filename, predictions):
@@ -26,7 +26,7 @@ def draw_sample(filename, predictions):
 
     fp = open(filename, "r")
     im = Image.open(fp)
-    im.thumbnail(IMAGE_SCALE_SIZE, Image.ANTIALIAS)
+    im.thumbnail(classify.Classifier.IMAGE_SCALE_SIZE, Image.ANTIALIAS)
     draw = ImageDraw.Draw(im)
 
     top, bottom = 0, 50
