@@ -3,7 +3,7 @@ from PIL import Image, ImageDraw
 
 from hyperbg import classify
 
-IMAGE_SCALE_SIZE = (600, 600)
+IMAGE_SCALE_SIZE = (500, 500)
 
 def image_colors(filename, k=3):
     "Extract the first k dominant colors from an image"
