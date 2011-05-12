@@ -1,7 +1,7 @@
 import sys
 from PIL import Image, ImageDraw
 
-import classify
+from hyperbg import classify
 
 IMAGE_SCALE_SIZE = (600, 600)
 
