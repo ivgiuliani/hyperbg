@@ -45,7 +45,7 @@ def main(args):
     try:
         filename = args[1]
     except IndexError:
-        print("Usage: %s <classes> <filename>" % (args[0], ))
+        print("Usage: %s <filename> [<classes>]" % (args[0], ))
         return False
  
     try:
