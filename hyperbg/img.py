@@ -1,24 +1,36 @@
 import sys
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageEnhance
 
 from hyperbg import classify
 
-def image_colors(filename, k=3):
-    "Extract the first k dominant colors from an image"
-    fp = open(filename, "r")
-    classifier = classify.Classifier(k=k)
+class Wallpaper(object):
+    IMAGE_SCALE_SIZE = (600, 600)
 
-    im = Image.open(fp)
-    im.load()
-    im = classifier.prepare_image(im)
+    def __init__(self, filename, k=3):
+        self.filename = filename
+        self.k = k
 
-    for pixel in im.getdata():
-        classifier.fit(pixel)
+    def __prepare(self):
+        "Return a new Image object enhanced for the classifying goal"
+        self.image.thumbnail(self.IMAGE_SCALE_SIZE, Image.NEAREST)
+        self.image = ImageEnhance.Contrast(self.image).enhance(0.9)
+        self.image = ImageEnhance.Sharpness(self.image).enhance(1.1)
 
-    prediction = classifier.predict()
-    fp.close()
+    def load(self):
+        self.image = Image.open(self.filename)
+        self.image.load()
 
-    return prediction
+    def colors(self):
+        "Extract the first k dominant colors from an image"
+        self.__prepare()
+        classifier = classify.Classifier(k=self.k)
+
+        for pixel in self.image.getdata():
+            classifier.fit(pixel)
+
+        prediction = classifier.predict()
+
+        return prediction
 
 def draw_sample(filename, predictions):
     "Draw the original image with a box of the predicted dominant colors"
@@ -26,7 +38,7 @@ def draw_sample(filename, predictions):
 
     fp = open(filename, "r")
     im = Image.open(fp)
-    im.thumbnail(classify.Classifier.IMAGE_SCALE_SIZE, Image.ANTIALIAS)
+    im.thumbnail(Wallpaper.IMAGE_SCALE_SIZE, Image.ANTIALIAS)
     draw = ImageDraw.Draw(im)
 
     top, bottom = 0, 50
@@ -53,7 +65,9 @@ def main(args):
     except (IndexError, ValueError):
         k = None
 
-    predictions = image_colors(filename, k or 3)
+    wallpaper = Wallpaper(filename, k or 3)
+    wallpaper.load()
+    predictions = wallpaper.colors()
     draw_sample(filename, predictions)
 
     return True

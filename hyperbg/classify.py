@@ -50,7 +50,6 @@ class Classifier(object):
     """
 
     ALPHA_RATE = 0.9
-    IMAGE_SCALE_SIZE = (600, 600)
 
     def __init__(self, k=3, distance=euclidean_color_distance):
         self.k = k
@@ -65,15 +64,6 @@ class Classifier(object):
                 random.randint(0, 255) / 255.0,
                 random.randint(0, 255) / 255.0,
             ])
-
-    def prepare_image(self, image):
-        "return a new Image object enhanced for the classifying goal"
-        im = image.copy()
-        im.thumbnail(self.IMAGE_SCALE_SIZE, Image.NEAREST)
-        im = ImageEnhance.Contrast(im).enhance(0.9)
-        im = ImageEnhance.Sharpness(im).enhance(1.1)
-
-        return im
 
     def fit(self, instance):
         "Add the instance to the dataset"
