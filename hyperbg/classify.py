@@ -49,7 +49,7 @@ class Classifier(object):
     Use the k-means algorithm to extract the k dominant colors.
     """
 
-    ALPHA_RATE = 0.9
+    LEARNING_RATE = 0.9
 
     def __init__(self, k=3, distance=euclidean_color_distance):
         self.k = k
@@ -88,8 +88,8 @@ class Classifier(object):
         #   isbn = {0387310738},
         # }
         color_diff = map(operator.sub, instance, self.means[min_idx])
-        alpha_vector = [self.ALPHA_RATE * x for x in color_diff]
-        self.means[min_idx] = map(operator.add, self.means[min_idx], alpha_vector)
+        learning_vector = [self.LEARNING_RATE * x for x in color_diff]
+        self.means[min_idx] = map(operator.add, self.means[min_idx], learning_vector)
 
     def predict(self):
         "Returns k color tuples, each corrisponding to a cluster"
