@@ -49,7 +49,7 @@ class Classifier(object):
     Use the k-means algorithm to extract the k dominant colors.
     """
 
-    LEARNING_RATE = 0.9
+    LEARNING_RATE = 0.8
 
     def __init__(self, k=3, distance=euclidean_color_distance):
         self.k = k
