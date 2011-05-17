@@ -67,10 +67,6 @@ class Classifier(object):
 
     def fit(self, instance):
         "Add the instance to the dataset"
-        instance = (instance[RGB_RED],
-                    instance[RGB_GREEN],
-                    instance[RGB_BLUE])
-
         distances = [
             self.distance(self.means[i], instance)
             for i in range(self.k)
