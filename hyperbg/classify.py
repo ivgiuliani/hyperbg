@@ -24,12 +24,12 @@ def color_distance(obj1, obj2):
     """
 
     # convert the values in the 0-255 range
-    obj1 = [int(math.ceil(obj1[RGB_RED] * 255)),
-            int(math.ceil(obj1[RGB_GREEN] * 255)),
-            int(math.ceil(obj1[RGB_BLUE] * 255))]
-    obj2 = [int(math.ceil(obj2[RGB_RED] * 255)),
-            int(math.ceil(obj2[RGB_GREEN] * 255)),
-            int(math.ceil(obj2[RGB_BLUE] * 255))]
+    obj1 = [int(math.ceil(obj1[RGB_RED])),
+            int(math.ceil(obj1[RGB_GREEN])),
+            int(math.ceil(obj1[RGB_BLUE]))]
+    obj2 = [int(math.ceil(obj2[RGB_RED])),
+            int(math.ceil(obj2[RGB_GREEN])),
+            int(math.ceil(obj2[RGB_BLUE]))]
 
     rmean = obj1[RGB_RED] + obj2[RGB_RED] / 2
     r = obj1[RGB_RED] - obj2[RGB_RED]
@@ -60,16 +60,16 @@ class Classifier(object):
         # initialize the means to random values
         for i in range(self.k):
             self.means.append([
-                random.randint(0, 255) / 255.0,
-                random.randint(0, 255) / 255.0,
-                random.randint(0, 255) / 255.0,
+                random.randint(0, 255),
+                random.randint(0, 255),
+                random.randint(0, 255),
             ])
 
     def fit(self, instance):
         "Add the instance to the dataset"
-        instance = (instance[RGB_RED] / 255.0,
-                    instance[RGB_GREEN] / 255.0,
-                    instance[RGB_BLUE] / 255.0)
+        instance = (instance[RGB_RED],
+                    instance[RGB_GREEN],
+                    instance[RGB_BLUE])
 
         distances = [
             self.distance(self.means[i], instance)
@@ -96,9 +96,9 @@ class Classifier(object):
         predictions = []
         for mean in self.means:
             predictions.append([
-                int(math.ceil(mean[RGB_RED] * 255)),
-                int(math.ceil(mean[RGB_GREEN] * 255)),
-                int(math.ceil(mean[RGB_BLUE] * 255))
+                int(math.ceil(mean[RGB_RED])),
+                int(math.ceil(mean[RGB_GREEN])),
+                int(math.ceil(mean[RGB_BLUE]))
             ])
         return predictions
 
