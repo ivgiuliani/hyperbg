@@ -2,7 +2,6 @@
 An implementation of the k-means algorithm for predominant color extraction
 """
 
-import random
 import math
 import operator
 from PIL import Image, ImageEnhance
@@ -54,19 +53,20 @@ class Classifier(object):
     def __init__(self, k=3, distance=euclidean_color_distance):
         self.k = k
         self.distance = distance
-        random.seed()
         self.means = []
 
-        # initialize the means to random values
-        for i in range(self.k):
-            self.means.append([
-                random.randint(0, 255),
-                random.randint(0, 255),
-                random.randint(0, 255),
-            ])
+        # ready_classes is the number of classes already initialized
+        # this is used to lazily initialize the classes with points
+        # from the source image
+        self.ready_classes = 0
 
     def fit(self, instance):
         "Add the instance to the dataset"
+        if self.ready_classes < self.k:
+            self.means.append(instance)
+            self.ready_classes += 1
+            return
+
         distances = [
             self.distance(self.means[i], instance)
             for i in range(self.k)
