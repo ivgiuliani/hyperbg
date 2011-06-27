@@ -1,5 +1,5 @@
 import sys
-from PIL import Image, ImageDraw, ImageEnhance
+from PIL import Image, ImageDraw, ImageFilter
 
 from hyperbg import classify
 
@@ -13,8 +13,10 @@ class Wallpaper(object):
     def __prepare(self):
         "Return a new Image object enhanced for the classifying goal"
         self.image.thumbnail(self.IMAGE_SCALE_SIZE, Image.NEAREST)
-        self.image = ImageEnhance.Contrast(self.image).enhance(0.9)
-        self.image = ImageEnhance.Sharpness(self.image).enhance(1.1)
+
+        # a blurred image is an image which carries less color informations
+        # which makes our job easier
+        self.image = self.image.filter(ImageFilter.BLUR)
 
     def load(self):
         self.image = Image.open(self.filename)
