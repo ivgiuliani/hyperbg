@@ -19,7 +19,12 @@ class Wallpaper(object):
         self.image = self.image.filter(ImageFilter.BLUR)
 
     def load(self):
-        self.image = Image.open(self.filename)
+        try:
+            self.image = Image.open(self.filename)
+        except IOError:
+            # catch and re-raise with a proper description
+            desc = "cannot open %s: broken file" % self.filename
+            raise IOError(desc)
         self.image.load()
 
     def colors(self):
