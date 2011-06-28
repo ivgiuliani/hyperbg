@@ -4,7 +4,7 @@ from PIL import Image, ImageDraw, ImageFilter
 from hyperbg import classify
 
 class Wallpaper(object):
-    IMAGE_SCALE_SIZE = (600, 600)
+    IMAGE_SCALE_SIZE = (300, 300)
 
     def __init__(self, filename, k=3):
         self.filename = filename
