@@ -50,7 +50,7 @@ class Classifier(object):
 
     LEARNING_RATE = 0.8
 
-    def __init__(self, k=3, distance=euclidean_color_distance):
+    def __init__(self, k=3, distance=color_distance):
         self.k = k
         self.distance = distance
         self.means = []
